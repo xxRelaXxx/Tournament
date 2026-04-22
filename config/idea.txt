@@ -1,0 +1,11 @@
+frontend: react-js/vite, tailwind v4, ready for vercel
+backend: node.js, docker for railway(publish)
+DB: postgres, will be connected via railway envoronment deirectly
+
+prepare: vercel and raiway deploying files
+
+main folders:
+    - frontend
+    - backend(node js with docker)
+
+The main folder 'tournament' is initialized with git, so the frontend and backend must be specified explicitly in configuration files for vercel and railway.
