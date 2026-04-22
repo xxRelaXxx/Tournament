@@ -284,11 +284,64 @@ async function init() {
     console.log('User:  user@hexcore.tech  / User@2025')
   } catch (err) {
     console.error('Init failed:', err)
-    process.exit(1)
+    throw err
   } finally {
     client.release()
-    await pool.end()
   }
 }
 
-init()
+// Allow both direct execution (node src/db/init.js) and require()
+async function initDatabase() {
+  const client = await pool.connect()
+  try {
+    console.log('Initializing HEXCORE database...')
+    const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8')
+    await client.query(schema)
+    console.log('✓ Schema applied')
+
+    const adminHash = await bcrypt.hash('Admin@2025', 12)
+    await client.query(
+      `INSERT INTO users (email, password_hash, first_name, last_name, role)
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (email) DO NOTHING`,
+      ['admin@hexcore.tech', adminHash, 'Alex', 'Morgan', 'admin']
+    )
+
+    const userHash = await bcrypt.hash('User@2025', 12)
+    await client.query(
+      `INSERT INTO users (email, password_hash, first_name, last_name, role)
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (email) DO NOTHING`,
+      ['user@hexcore.tech', userHash, 'Jordan', 'Smith', 'user']
+    )
+    console.log('✓ Demo users seeded')
+
+    for (const p of PRODUCTS) {
+      await client.query(
+        `INSERT INTO products
+           (name, category, description, price, original_price, stock, rating, reviews_count, tags, featured)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+         ON CONFLICT DO NOTHING`,
+        [
+          p.name, p.category, p.description, p.price,
+          p.original_price || null, p.stock, p.rating,
+          p.reviews_count, p.tags, p.featured,
+        ]
+      )
+    }
+    console.log(`✓ ${PRODUCTS.length} products seeded`)
+    console.log('Database initialization complete!')
+  } catch (err) {
+    console.error('Init failed:', err)
+    throw err
+  } finally {
+    client.release()
+  }
+}
+
+module.exports = { initDatabase }
+
+// Direct execution: node src/db/init.js
+if (require.main === module) {
+  initDatabase().then(() => pool.end()).catch(() => process.exit(1))
+}
