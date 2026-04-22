@@ -5,6 +5,19 @@ const { requireAuth, requireAdmin } = require('../middleware/auth')
 
 const router = express.Router()
 
+// pg returns NUMERIC columns as strings — coerce to JS numbers
+function serialize(row) {
+  if (!row) return row
+  return {
+    ...row,
+    price:          parseFloat(row.price),
+    original_price: row.original_price != null ? parseFloat(row.original_price) : null,
+    stock:          parseInt(row.stock, 10),
+    rating:         parseFloat(row.rating),
+    reviews_count:  parseInt(row.reviews_count, 10),
+  }
+}
+
 // GET /api/products — public list with optional filters
 router.get('/', async (req, res) => {
   const { category, search, featured, limit = 100, offset = 0 } = req.query
@@ -37,7 +50,7 @@ router.get('/', async (req, res) => {
     `
 
     const result = await pool.query(sql, params)
-    res.json({ products: result.rows, total: result.rowCount })
+    res.json({ products: result.rows.map(serialize), total: result.rowCount })
   } catch (err) {
     console.error('Products list error:', err)
     res.status(500).json({ error: 'Internal server error' })
@@ -49,7 +62,7 @@ router.get('/:id', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM products WHERE id = $1', [req.params.id])
     if (!result.rows[0]) return res.status(404).json({ error: 'Product not found' })
-    res.json(result.rows[0])
+    res.json(serialize(result.rows[0]))
   } catch (err) {
     console.error('Product get error:', err)
     res.status(500).json({ error: 'Internal server error' })
@@ -94,7 +107,7 @@ router.post('/', requireAuth, requireAdmin, productValidators, async (req, res) 
         featured || false,
       ]
     )
-    res.status(201).json(result.rows[0])
+    res.status(201).json(serialize(result.rows[0]))
   } catch (err) {
     console.error('Product create error:', err)
     res.status(500).json({ error: 'Internal server error' })
@@ -132,7 +145,7 @@ router.put('/:id', requireAuth, requireAdmin, productValidators, async (req, res
       ]
     )
     if (!result.rows[0]) return res.status(404).json({ error: 'Product not found' })
-    res.json(result.rows[0])
+    res.json(serialize(result.rows[0]))
   } catch (err) {
     console.error('Product update error:', err)
     res.status(500).json({ error: 'Internal server error' })
