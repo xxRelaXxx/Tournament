@@ -1,0 +1,30 @@
+# Root .dockerignore — build context is the repository root.
+# Excludes everything that is not needed inside the backend image.
+
+# Frontend source (never needed in the backend image)
+frontend/
+
+# Git metadata
+.git/
+.gitignore
+.gitattributes
+
+# Docs / IDE
+*.md
+.vscode/
+.idea/
+
+# OS artefacts
+.DS_Store
+Thumbs.db
+
+# Root-level env files
+.env
+.env.*
+
+# Node modules at root level (if any)
+node_modules/
+
+# CI / coverage
+.github/
+coverage/
