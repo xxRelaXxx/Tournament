@@ -49,7 +49,12 @@ export default function ProductCard({ product }) {
       >
         {/* Product image area */}
         <div className="relative aspect-[4/3]">
-          <ProductThumbnail category={product.category} style={style} />
+          <ProductThumbnail
+            category={product.category}
+            style={style}
+            imageUrl={product.image_url}
+            alt={product.name}
+          />
 
           {/* Top-right badges */}
           <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">

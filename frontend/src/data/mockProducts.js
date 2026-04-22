@@ -15,6 +15,7 @@ export const mockProducts = [
     rating: 4.8,
     reviews_count: 312,
     tags: ['mechanical', 'RGB', 'Cherry MX', 'aluminum', 'USB-C'],
+    image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn4_RbuAVPtm3hoU8IRRDH5pCYu20_ptlOMg&s',
     featured: true,
   },
   {
@@ -29,6 +30,7 @@ export const mockProducts = [
     rating: 4.4,
     reviews_count: 156,
     tags: ['wireless', 'TKL', 'Bluetooth', 'compact'],
+    image_url: 'https://m.media-amazon.com/images/I/61meQuPPc-L._AC_UF894,1000_QL80_.jpg',
     featured: false,
   },
   {
@@ -43,6 +45,7 @@ export const mockProducts = [
     rating: 4.6,
     reviews_count: 89,
     tags: ['60%', 'hot-swap', 'Gateron', 'compact', 'RGB'],
+    image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBm6eilIPGU6lkXUMgsOsGQUlSZtN_KKte8w&s',
     featured: false,
   },
   {
@@ -57,6 +60,7 @@ export const mockProducts = [
     rating: 4.9,
     reviews_count: 445,
     tags: ['wireless', 'PAW3395', '26000 DPI', 'lightweight'],
+    image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaBxj8omFtB04AL9rvuqtfA7264SxqaO8sHw&s',
     featured: true,
   },
   {
@@ -71,6 +75,7 @@ export const mockProducts = [
     rating: 4.5,
     reviews_count: 203,
     tags: ['wired', 'symmetrical', '12000 DPI', 'ergonomic'],
+    image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbpJSb1rRFdYCiujQsutnw7biso2TwyC0rtA&s',
     featured: false,
   },
   {
@@ -85,6 +90,7 @@ export const mockProducts = [
     rating: 4.7,
     reviews_count: 178,
     tags: ['ultra-light', 'honeycomb', '8K polling', 'PAW3395'],
+    image_url: 'https://i5.walmartimages.com/seo/Logitech-G203-Lightsync-Mose-Black_d28f7772-ee8d-4bac-93ac-a04ef55ba714.96c34343dc0c512d778b31dd5caf5bbe.jpeg',
     featured: false,
   },
   {
@@ -99,6 +105,7 @@ export const mockProducts = [
     rating: 4.6,
     reviews_count: 267,
     tags: ['7.1 surround', 'detachable mic', 'USB', '3.5mm'],
+    image_url: 'https://m.media-amazon.com/images/I/61RahTQtAqL._AC_UF1000,1000_QL80_.jpg',
     featured: true,
   },
   {
@@ -113,6 +120,7 @@ export const mockProducts = [
     rating: 4.8,
     reviews_count: 94,
     tags: ['open-back', 'planar', 'studio', 'reference'],
+    image_url: 'https://it.static.webuy.com/product_images/Elettronica/Cuffie%20-%20Apple/SCUFAAPMOEGC_l.jpg',
     featured: false,
   },
   {
@@ -127,6 +135,7 @@ export const mockProducts = [
     rating: 4.7,
     reviews_count: 134,
     tags: ['27"', 'QHD', '165Hz', 'IPS', 'USB-C'],
+    image_url: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/aw-series/aw3225qf/pdp/monitor-alienware-aw3225qf-hero.psd?fmt=jpg&wid=756&hei=525',
     featured: true,
   },
   {
@@ -141,6 +150,7 @@ export const mockProducts = [
     rating: 4.9,
     reviews_count: 67,
     tags: ['32"', '4K', 'OLED', '120Hz', 'HDR1000'],
+    image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU-EU3urVr0-p0Hk2D-6ngDOubcNZcbNJdfg&s',
     featured: false,
   },
   {

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- Products table
 CREATE TABLE IF NOT EXISTS products (
   id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name           VARCHAR(255) NOT NULL,
+  name           VARCHAR(255) NOT NULL UNIQUE,
   category       VARCHAR(100) NOT NULL,
   description    TEXT NOT NULL DEFAULT '',
   price          NUMERIC(10, 2) NOT NULL,

@@ -96,9 +96,9 @@ const ICONS = {
 }
 
 /**
- * Product image area — gradient bg + category-specific SVG icon + subtle hex pattern
+ * Product image area — real photo when image_url is set, SVG icon fallback otherwise.
  */
-export default function ProductThumbnail({ category, style }) {
+export default function ProductThumbnail({ category, style, imageUrl, alt }) {
   const Icon = ICONS[category] || AccessoriesIcon
   const color = style?.accent || '#00C6FF'
   const from  = style?.gradFrom || '#061a30'
@@ -109,13 +109,30 @@ export default function ProductThumbnail({ category, style }) {
       className="w-full h-full flex items-center justify-center relative overflow-hidden"
       style={{ background: `linear-gradient(145deg, ${from}, ${to})` }}
     >
-      {/* Hex pattern overlay */}
-      <div className="absolute inset-0 hex-pattern opacity-30 pointer-events-none" />
+      {/* Hex pattern overlay — always present as subtle bg */}
+      <div className="absolute inset-0 hex-pattern opacity-20 pointer-events-none" />
 
-      {/* Icon with subtle glow ring */}
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt={alt || category}
+          className="relative z-10 w-full h-full object-cover"
+          loading="lazy"
+          onError={(e) => {
+            // On broken URL fall back to SVG icon
+            e.currentTarget.style.display = 'none'
+            e.currentTarget.nextElementSibling.style.display = 'flex'
+          }}
+        />
+      ) : null}
+
+      {/* SVG icon — shown when no imageUrl or img fails to load */}
       <div
         className="relative z-10 flex items-center justify-center"
-        style={{ filter: `drop-shadow(0 0 14px ${color}55)` }}
+        style={{
+          filter: `drop-shadow(0 0 14px ${color}55)`,
+          display: imageUrl ? 'none' : 'flex',
+        }}
       >
         <Icon color={color} />
       </div>

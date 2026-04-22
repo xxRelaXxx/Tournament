@@ -86,7 +86,12 @@ export default function ProductDetail({ product, open, onClose, style }) {
               <div className="grid sm:grid-cols-2 gap-0">
                 {/* Image */}
                 <div className="aspect-square sm:aspect-auto sm:h-72">
-                  <ProductThumbnail category={product.category} style={style} />
+                  <ProductThumbnail
+                    category={product.category}
+                    style={style}
+                    imageUrl={product.image_url}
+                    alt={product.name}
+                  />
                 </div>
 
                 {/* Content */}
