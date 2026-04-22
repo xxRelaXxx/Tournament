@@ -332,6 +332,23 @@ async function initDatabase() {
     )
     console.log('✓ Demo users seeded')
 
+    // Ensure the unique constraint exists (live DB may pre-date schema change)
+    await client.query(`
+      DO $$ BEGIN
+        IF NOT EXISTS (
+          SELECT 1 FROM pg_constraint
+          WHERE conname = 'products_name_key'
+             OR (conrelid = 'products'::regclass AND contype = 'u'
+                 AND array_length(conkey, 1) = 1
+                 AND conkey[1] = (SELECT attnum FROM pg_attribute
+                                  WHERE attrelid = 'products'::regclass
+                                    AND attname = 'name'))
+        ) THEN
+          ALTER TABLE products ADD CONSTRAINT products_name_unique UNIQUE (name);
+        END IF;
+      END $$;
+    `)
+
     for (const p of PRODUCTS) {
       await client.query(
         `INSERT INTO products
