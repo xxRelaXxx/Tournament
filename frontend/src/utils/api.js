@@ -3,7 +3,9 @@
  * Falls back gracefully when the backend is unavailable.
  */
 
-const BASE_URL = import.meta.env.VITE_API_URL || ''
+const BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'https://tournament-production-aafe.up.railway.app/api'
 
 function getHeaders() {
   const token = localStorage.getItem('hexcore_token')
